@@ -2,6 +2,10 @@
 
 namespace Framework\Routing;
 
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
+
 class Router
 {
     /** @var string */
@@ -19,12 +23,56 @@ class Router
         $this->param_routes = $param_routes;
     }
 
+    public static function load_routes($route_dir)
+    {
+        $routes = [];
+        $route_dir = realpath($route_dir);
+        $it = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($route_dir)
+        );
+        /** @var SplFileInfo $file */
+        foreach ($it as $file) {
+            if ($file->isDir() || $file->getExtension() !== ROUTE_EXT) continue;
+            $route_path = substr(
+                str_replace('\\', '/', $file->getPathname()),
+                strlen($route_dir) + 1
+            );
+            $route_parts = ParamRoute::parse_path($route_path);
+            if ($route_parts) $routes[] = new ParamRoute($route_path, $route_parts);
+        }
+
+        return $routes;
+    }
+
     /**
      * @param $request_path
-     * @return RouteResult
+     * @return false|RouteResult
      */
     public function get_route($request_path)
     {
+        if ($result = $this->get_file($request_path))
+            return $result;
+        if ($result = $this->get_file("$request_path/index"))
+            return $result;
 
+        foreach ($this->param_routes as $route) {
+            if ($param_values = $route->match($request_path))
+                return new RouteResult($route->route_path, $param_values);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $request_path
+     * @return false|RouteResult
+     */
+    private function get_file($request_path)
+    {
+        $route_path = realpath(
+            "$this->base_dir/$request_path." . ROUTE_EXT
+        );
+        return file_exists($route_path) ? new RouteResult($route_path, [])
+            : false;
     }
 }
