@@ -1,6 +1,6 @@
 <?php
 
-use Framework\Core\AppFactory;
+use P\Core\AppFactory;
 
 require_once 'lib/autoload.php';
 require_once 'config.php';

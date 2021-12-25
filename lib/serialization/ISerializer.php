@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Serialization;
+namespace P\Serialization;
 
 interface ISerializer
 {

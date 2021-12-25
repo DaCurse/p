@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Caching;
+namespace P\Caching;
 
 class CacheRecord
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Framework\Core;
+namespace P\Core;
 
-use Framework\Caching\CacheManager;
-use Framework\Routing\Router;
+use P\Caching\CacheManager;
+use P\Routing\Router;
 
 /**
  * Well known registered read-only providers (dynamic properties)

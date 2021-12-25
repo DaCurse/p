@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Routing;
+namespace P\Routing;
 
 class RouteResult
 {

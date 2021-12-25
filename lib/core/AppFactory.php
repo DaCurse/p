@@ -1,10 +1,10 @@
 <?php
 
-namespace Framework\Core;
+namespace P\Core;
 
-use Framework\Caching\CacheManager;
-use Framework\Routing\Router;
-use Framework\Serialization\PHPSerializer;
+use P\Caching\CacheManager;
+use P\Routing\Router;
+use P\Serialization\PHPSerializer;
 
 class AppFactory
 {
