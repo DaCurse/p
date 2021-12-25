@@ -44,6 +44,9 @@ class Router
         return $routes;
     }
 
+    /**
+     * @return string
+     */
     public static function get_request_path()
     {
         $parts = explode('/', substr($_SERVER['PHP_SELF'], 1), 2);

@@ -42,6 +42,9 @@ class App
         $this->providers[$name] = $provider;
     }
 
+    /**
+     * @return void
+     */
     public function start()
     {
         $request_path = [get_class($this->router), 'get_request_path']();

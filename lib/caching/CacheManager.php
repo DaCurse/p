@@ -49,12 +49,18 @@ class CacheManager
         $this->should_update = true;
     }
 
+    /**
+     * @return void
+     */
     public function clear()
     {
         $this->cache = [];
         $this->should_update = true;
     }
 
+    /**
+     * @return CacheRecord[]
+     */
     private function load_cache()
     {
         $cache = (array)$this->serializer->deserialize(file_get_contents($this->cache_path));

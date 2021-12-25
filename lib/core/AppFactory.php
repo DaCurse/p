@@ -15,6 +15,11 @@ class AppFactory
     {
     }
 
+    /**
+     * @param string $cache_path
+     * @param string $route_dir
+     * @return App
+     */
     public static function create_app($cache_path, $route_dir)
     {
         $cache_serializer = new PHPSerializer();
