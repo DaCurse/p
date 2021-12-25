@@ -2,17 +2,28 @@
 
 namespace P\Caching;
 
+use P\Serialization\ISerializer;
 
+/**
+ * Generic cache manager
+ *
+ * Loads timed cached data from a file to memory and writes to the file if the memory copy was changed
+ */
 class CacheManager
 {
     /** @var string */
     private $cache_path;
+    /** @var ISerializer */
     private $serializer;
     /** @var bool */
     private $should_update;
     /** @var CacheRecord[] */
     private $cache;
 
+    /**
+     * @param string $cache_path
+     * @param ISerializer $serializer
+     */
     public function __construct($cache_path, $serializer)
     {
         $this->cache_path = $cache_path;
@@ -38,6 +49,7 @@ class CacheManager
     }
 
     /**
+     * Create or update an existing cache record, and eventually update the cache file
      * @param string $name
      * @param mixed $value
      * @param float $ttl
@@ -50,6 +62,7 @@ class CacheManager
     }
 
     /**
+     * Clears the current cache and cache file
      * @return void
      */
     public function clear()
@@ -59,11 +72,16 @@ class CacheManager
     }
 
     /**
+     * Loads all cache records from the cache file
      * @return CacheRecord[]
      */
     private function load_cache()
     {
-        $cache = (array)$this->serializer->deserialize(file_get_contents($this->cache_path));
+        $cache = @$this->serializer->deserialize(file_get_contents($this->cache_path));
+        if (!is_array($cache)) {
+            return [];
+        }
+
         return array_filter($cache, function ($record) {
             return (
                 get_class($record) !== '__PHP_Incomplete_Class' &&

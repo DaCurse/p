@@ -6,6 +6,9 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 
+/**
+ * Handles loading and parsing requests into routes
+ */
 class Router
 {
     /** @var string */
@@ -23,6 +26,11 @@ class Router
         $this->param_routes = $param_routes;
     }
 
+    /**
+     * Recursively loads all parameterized routes in a directory
+     * @param $route_dir
+     * @return ParamRoute[]
+     */
     public static function load_routes($route_dir)
     {
         $routes = [];
@@ -45,6 +53,7 @@ class Router
     }
 
     /**
+     * Returns the requested path from the current request
      * @return string
      */
     public static function get_request_path()
@@ -54,6 +63,8 @@ class Router
     }
 
     /**
+     * Tries to return a route result for a requested path, along with
+     * any parameters if the matched route is parameterized
      * @param $request_path
      * @return false|RouteResult
      */
@@ -73,6 +84,7 @@ class Router
     }
 
     /**
+     * Tries to return a route result for a file
      * @param string $request_path
      * @return false|RouteResult
      */
@@ -81,7 +93,8 @@ class Router
         $route_path = realpath(
             "$this->base_dir/$request_path." . ROUTE_EXT
         );
-        return file_exists($route_path) ? new RouteResult($route_path, [])
+        return file_exists($route_path)
+            ? new RouteResult($route_path, [])
             : false;
     }
 }

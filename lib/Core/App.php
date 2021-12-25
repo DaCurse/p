@@ -6,16 +6,22 @@ use P\Caching\CacheManager;
 use P\Routing\Router;
 
 /**
- * Well known registered read-only providers (dynamic properties)
- * @property CacheManager $cache
+ * Main flow handler
+ * @property CacheManager $cache Dynamically injected cache manager instance
  */
 class App
 {
     /** @var Router */
     private $router;
-    /** @var object[] */
+    /**
+     * @var object[]
+     * List of useful instances that can be accessed from an App instance
+     */
     private $providers;
 
+    /**
+     * @param Router $router
+     */
     public function __construct($router)
     {
         $this->router = $router;
@@ -23,6 +29,7 @@ class App
     }
 
     /**
+     * Get a registered provider instance
      * @param string $name
      * @return false|object
      */
@@ -33,6 +40,7 @@ class App
     }
 
     /**
+     * Register a provider instance
      * @param string $name
      * @param object $provider
      * @return void
@@ -43,6 +51,7 @@ class App
     }
 
     /**
+     * Main application logic, parses request, loads correct route and returns a response
      * @return void
      */
     public function start()

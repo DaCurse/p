@@ -2,6 +2,9 @@
 
 namespace P\Serialization;
 
+/**
+ * Serializer implementation that uses PHP's basic serialization
+ */
 class PHPSerializer implements ISerializer
 {
     /**

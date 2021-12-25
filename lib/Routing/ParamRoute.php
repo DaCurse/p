@@ -4,6 +4,9 @@ namespace P\Routing;
 
 use ArrayIterator;
 
+/**
+ * A parametrized route
+ */
 class ParamRoute
 {
     /** @var string */
@@ -22,6 +25,7 @@ class ParamRoute
     }
 
     /**
+     * Parses a path into it's parts
      * @param string $route_path
      * @return false|string[]
      */
@@ -41,6 +45,8 @@ class ParamRoute
     }
 
     /**
+     * Checks if a requested path matches the current route and
+     * gets all parameter values if it does
      * @param string $request_path
      * @return false|string[]
      */

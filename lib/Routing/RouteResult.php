@@ -2,6 +2,9 @@
 
 namespace P\Routing;
 
+/**
+ * Contains information about a requested route
+ */
 class RouteResult
 {
     /** @var string */

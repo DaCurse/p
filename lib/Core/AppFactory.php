@@ -6,6 +6,9 @@ use P\Caching\CacheManager;
 use P\Routing\Router;
 use P\Serialization\PHPSerializer;
 
+/**
+ * Creates all needed dependencies for an App instance and returns a new one
+ */
 class AppFactory
 {
     /**

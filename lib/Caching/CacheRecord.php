@@ -2,6 +2,9 @@
 
 namespace P\Caching;
 
+/**
+ * Holds cached data and the time in which it expires
+ */
 class CacheRecord
 {
     /** @var mixed */
